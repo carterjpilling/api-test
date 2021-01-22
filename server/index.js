@@ -21,10 +21,10 @@ app.delete('/api/classes/:id', classCtrl.deleteClass)
 
 //Student Endpoints
 app.get('/api/students', studentCtrl.getAllStudents)
-app.get('/api/students/:studentid', studentCtrl.getOneStudent)
+app.get('/api/student/:studentid', studentCtrl.getOneStudent)
 app.post('/api/students', studentCtrl.newStudent)
-app.put('/api/students/:studentid', studentCtrl.editStudentDetails)
-app.delete('/api/students/:studentid', studentCtrl.deleteStudent)
+app.put('/api/students/:studentid', studentCtrl.updateGPA)
+app.delete('/api/student/:studentid', studentCtrl.deleteStudent)
 
 //Teacher Endpoints
 
