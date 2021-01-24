@@ -36,18 +36,16 @@ module.exports = {
       res.status(404).send('Student not found.')
     }
     const { gpa } = req.body
-    // if (!gpa) {
-    //   res.status(400).send('Please provide a GPA')
-    // }
-
+    if (!gpa) {
+      res.status(400).send('Please provide a GPA')
+    }
     const [student] = await db.update_gpa([gpa, studentid])
     res.status(200).send(student)
   },
   deleteStudent: async (req, res) => {
     const db = req.app.get('db')
-    const [studentid] = req.params
+    const { studentid } = req.params
 
-    // console.log(studentid)
     if (!studentid) {
       res.status(404).send('Student not found.')
     }
