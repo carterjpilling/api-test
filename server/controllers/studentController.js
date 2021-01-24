@@ -48,9 +48,9 @@ module.exports = {
     const [studentid] = req.params
 
     // console.log(studentid)
-    // if (!studentid) {
-    //   res.status(404).send('Student not found.')
-    // }
+    if (!studentid) {
+      res.status(404).send('Student not found.')
+    }
     await db.delete_student([studentid])
     res.sendStatus(200)
   }
