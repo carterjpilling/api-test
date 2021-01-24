@@ -12,21 +12,30 @@ module.exports = {
 
     res.sendStatus(200)
   },
-  changeClassTeacher: async (req, res) => {
-    //Still need to work on this one.
+  changeClassRoom: async (req, res) => {
     const db = req.app.get('db')
-    const { id } = req.params
-    const { new_teacher } = req.body
+    const { classid } = req.params
+    const { new_room } = req.body
 
-    await db.change_teacher([id, new_teacher])
+    const [classCheck] = await db.check_class([classid])
+    if (!classCheck) {
+      return res.status(404).send('Class not found.')
+    }
+
+    await db.change_room([classid, new_room])
 
     res.sendStatus(200)
   },
   deleteClass: async (req, res) => {
     const db = req.app.get('db')
-    const { id } = req.params
+    const { classid } = req.params
 
-    await db.delete_class([id])
+    const [classCheck] = await db.check_class([classid])
+    if (!classCheck) {
+      return res.status(404).send('Class not found.')
+    }
+
+    await db.delete_class([classid])
 
     res.sendStatus(200)
   }

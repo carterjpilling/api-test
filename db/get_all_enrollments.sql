@@ -1,1 +1,4 @@
-SELECT*FROM enrollment_table;
+SELECT ct.class_name, st.last_name
+FROM enrollment_table et
+JOIN class_table ct ON ct.id = et.class_id
+JOIN student_table st ON st.id = et.student_id

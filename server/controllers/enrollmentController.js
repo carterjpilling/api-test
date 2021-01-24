@@ -1,16 +1,4 @@
 
-async function checkStudent(id, db) {
-  const student = await db.get_one_student([id])
-  console.log(student)
-  return [student]
-}
-
-async function checkClass(id) {
-  const db = req.app.get('db')
-  const classCheck = await db.check_class([classid])
-  return classCheck
-}
-
 module.exports = {
   getAllEnrollments: async (req, res) => {
     const db = req.app.get('db')
@@ -20,15 +8,18 @@ module.exports = {
   },
   getOneClassEnrollments: async (req, res) => {
     const db = req.app.get('db')
-    const { enrollmentid } = req.params
-    const class_list = await db.get_one_enrollment([enrollmentid])
+    const { classname } = req.params
+    const class_list = await db.get_one_enrollment([classname])
+
+    if (!class_list[0]) {
+      return res.status(404).send('Could not find requested class.')
+    }
 
     res.status(200).send(class_list)
   },
   enrollStudent: async (req, res) => {
     const db = req.app.get('db')
     const { studentid, classid } = req.params
-
 
     const [studentcheck] = await db.get_one_student([studentid])
     if (!studentcheck) {
@@ -41,14 +32,11 @@ module.exports = {
     }
 
     await db.enroll_student([classid, studentid])
-
-
     res.sendStatus(200)
   },
   dropClassEnrollment: async (req, res) => {
     const db = req.app.get('db')
     const { studentid, classid } = req.params
-
 
     const [studentcheck] = await db.get_one_student([studentid])
     if (!studentcheck) {

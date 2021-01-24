@@ -4,7 +4,6 @@ const massive = require('massive')
 const enrollCtrl = require('./controllers/enrollmentController')
 const studentCtrl = require('./controllers/studentController')
 const classCtrl = require('./controllers/classController')
-const teachCtrl = require('./controllers/teacherController')
 
 
 const app = express()
@@ -16,8 +15,8 @@ app.use(express.json())
 //Class Endpoints
 app.get('/api/classes', classCtrl.getClasses)
 app.post('/api/classes', classCtrl.addClass)
-app.put('/api/classes/:id', classCtrl.changeClassTeacher)
-app.delete('/api/classes/:id', classCtrl.deleteClass)
+app.put('/api/classes/:classid', classCtrl.changeClassRoom)
+app.delete('/api/classes/:classid', classCtrl.deleteClass)
 
 //Student Endpoints
 app.get('/api/students', studentCtrl.getAllStudents)
@@ -26,15 +25,10 @@ app.post('/api/students', studentCtrl.newStudent)
 app.put('/api/students/:studentid', studentCtrl.updateGPA)
 app.delete('/api/students/:studentid', studentCtrl.deleteStudent)
 
-//Teacher Endpoints
-app.get('/api/teachers', teachCtrl.getAllTeachers)
-app.get('/api/teachers/:teacherid', teachCtrl.getOneTeacher)
-app.post('/api/teachers', teachCtrl.newTeacher)
-app.delete('/api/teachers/:teacherid', teachCtrl.deleteTeacher)
 
 //Enrollment Endpoints
 app.get('/api/enrollments', enrollCtrl.getAllEnrollments)
-app.get('/api/enrollments/:enrollmentid', enrollCtrl.getOneClassEnrollments)
+app.get('/api/enrollments/:classname', enrollCtrl.getOneClassEnrollments)
 app.post('/api/enrollments/:classid/:studentid', enrollCtrl.enrollStudent)
 app.delete('/api/enrollments/:classid/:studentid', enrollCtrl.dropClassEnrollment)
 

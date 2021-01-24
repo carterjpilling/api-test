@@ -4,9 +4,8 @@ module.exports = {
     const { first_name, last_name, home_state } = req.body
 
     if ((!first_name) || (!last_name) || (!home_state)) {
-      return res.status(204).send('Please provide all required information including First and Last Name and Home State.')
+      return res.send('Please provide all required information including First and Last Name and Home State.')
     }
-
     await db.new_student([first_name, last_name, home_state])
 
     res.sendStatus(200)
@@ -31,14 +30,17 @@ module.exports = {
   updateGPA: async (req, res) => {
     const db = req.app.get('db')
     const { studentid } = req.params
-
-    if (!studentid) {
-      res.status(404).send('Student not found.')
-    }
     const { gpa } = req.body
+
+    const [studentcheck] = await db.get_one_student([studentid])
+    if (!studentcheck) {
+      return res.status(404).send('Student not found.')
+    }
+
     if (!gpa) {
       res.status(400).send('Please provide a GPA')
     }
+
     const [student] = await db.update_gpa([gpa, studentid])
     res.status(200).send(student)
   },
@@ -46,9 +48,11 @@ module.exports = {
     const db = req.app.get('db')
     const { studentid } = req.params
 
-    if (!studentid) {
-      res.status(404).send('Student not found.')
+    const [studentcheck] = await db.get_one_student([studentid])
+    if (!studentcheck) {
+      return res.status(404).send('Student not found.')
     }
+
     await db.delete_student([studentid])
     res.sendStatus(200)
   }

@@ -13,11 +13,6 @@ class_id INT REFERENCES class_table(id),
 student_id INT REFERENCES student_table(id)
 );
 
-CREATE TABLE teachers(
-id SERIAL PRIMARY KEY,
-teacher_last_name TEXT
-);
-
 CREATE TABLE class_table(
 id SERIAL PRIMARY KEY,
 class_name TEXT,
