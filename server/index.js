@@ -33,6 +33,12 @@ app.post('/api/teachers', teachCtrl.newTeacher)
 app.delete('/api/teachers/:teacherid', teachCtrl.deleteTeacher)
 
 //Enrollment Endpoints
+app.get('/api/enrollments', enrollCtrl.getAllEnrollments)
+app.get('/api/enrollments/:enrollmentid', enrollCtrl.getOneClassEnrollments)
+app.post('/api/enrollments/:classid/:studentid', enrollCtrl.enrollStudent)
+app.delete('/api/enrollments/:classid/:studentid', enrollCtrl.dropClassEnrollment)
+
+
 
 
 massive({

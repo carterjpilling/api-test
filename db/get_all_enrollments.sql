@@ -1,0 +1,1 @@
+SELECT*FROM enrollment_table;
